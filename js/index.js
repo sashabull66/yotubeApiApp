@@ -4,16 +4,17 @@ const gloAcademyList = document.querySelector('.glo-academy-list');
 const trendingList = document.querySelector('.trending-list');
 const musicList = document.querySelector('.music-list');
 
-
 const createCard = (dataVideo) => {
     const imgUrl = dataVideo.snippet.thumbnails.high.url;
-    const videoId = dataVideo.id.videoId
+    const videoId = typeof dataVideo.id === 'string' ? dataVideo.id : dataVideo.id.videoId
     const titleVideo = dataVideo.snippet.title
+    const viewCount = dataVideo.statistics?.viewCount
     const dateVideo = dataVideo.snippet.publishedAt
     const channelTitle = dataVideo.snippet.channelTitle
-    const card = document.createElement('div');
+    const card = document.createElement('div'); // создаю элемент-div
 
-    card.classList.add('video-card')
+    card.classList.add('video-card') // добавляю класс созданному div
+    // вставить теги с переменными в созданный выше div
     card.innerHTML = `
             <div class="video-thumb">
               <a class="link-video youtube-modal" href="https://www.youtube.com/watch?v=${videoId}">
@@ -22,25 +23,50 @@ const createCard = (dataVideo) => {
             </div>
             <h3 class="video-title">${titleVideo}</h3>
             <div class="video-info">
-              <span class="video-counter">
+                <span class="video-counter">
+                ${viewCount ? `<span class="video-views">${viewCount}</span>`:''}
                 <span class="video-date">${dateVideo}</span>
               </span>
               <span class="video-channel">${channelTitle}</span>
             </div>
     `;
-    return card
+    return card // вернуть функцией выше созданный элемент
 }
-const createList = (wrapper, listVideo) => {
-    wrapper.textContent = ''; // лучше чем inner (так как дешевле)
-    /*    for (let i = 0; i < listVideo.length; i++) { // for дешевле чем for Each()
-            wrapper.textContent += listVideo[i]; // зачем тут + а все понял чтобы добавлялось а не перезаписывалось
-        }*/
-    listVideo.forEach((item) => {
-            const card = createCard(item)
-            wrapper.append(card)
-        }); // можно убрать скобки вокруг item так как он один аргумент и можно убрать фигурные скобки
+const createList = (wrapper, listVideo) => { // аргументы: 1 оболочка блока с видео, 2 коллекция (массив) с кучей говна откуда вышеуказанная функция будет выковыривать нужное
+    wrapper.textContent = ''; // очистить оболочку от контента
+    listVideo.forEach((item) => { // для всех элементов массива с кучей г..а...
+        const card = createCard(item) // переменная для каждого элемента массива прогоняющая этот элемент массива через функцию выше
+        wrapper.append(card) // добавить созданный элемент в конец оболочки блока с видео
+    });
 
 };
 createList(gloAcademyList, gloAcademy)
 createList(trendingList, trending)
 createList(musicList, music)
+
+// youtube API
+
+const authBtn = document.querySelector('.auth-btn')
+const userAvatar = document.querySelector('.user-avatar')
+
+const handleAuth = () => {
+    console.log(gapi.auth2);
+}
+
+const handleSignOut = () => {
+
+}
+
+function initClient() {
+    gapi.client.init({
+        'apiKey': API_KEY,
+        'clientId': CLIENT_ID,
+        'scope': 'https://www.googleapis.com/auth/drive.metadata.readonly',
+        'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
+    }).then(() => {
+        authBtn.addEventListener('click', handleAuth);
+        userAvatar.addEventListener('click', handleSignOut)
+    });
+}
+
+gapi.load('client:auth2', initClient)
