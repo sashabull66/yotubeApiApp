@@ -1,5 +1,8 @@
 const API_KEY = 'AIzaSyDeYXNJwr3BIBzMf956g-sRvIgK9OkUDvI';
+const CLIENT_ID = '144449249725-r7ro322nk1o2i0tsjuihpm1dbq8bmmu8.apps.googleusercontent.com';
 const gloAcademyList = document.querySelector('.glo-academy-list');
+const trendingList = document.querySelector('.trending-list');
+const musicList = document.querySelector('.music-list');
 
 
 const createCard = (dataVideo) => {
@@ -39,3 +42,5 @@ const createList = (wrapper, listVideo) => {
 
 };
 createList(gloAcademyList, gloAcademy)
+createList(trendingList, trending)
+createList(musicList, music)
