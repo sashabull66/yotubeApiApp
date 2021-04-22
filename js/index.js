@@ -93,11 +93,12 @@ function initClient() {
     }).then(() => {
         updateStatusAuth(gapi.auth2.getAuthInstance())
         authBtn.addEventListener('click', handleAuth);
-        userAvatar.addEventListener('click', handleSignOut)
-    });
+        userAvatar.addEventListener('click', handleSignOut);
+    }).catch(() => {
+        authBtn.removeEventListener('click', handleAuth);
+        userAvatar.removeEventListener('click', handleSignOut);
+        alert('Авторизация не возможна!')
+    })
 }
 
 gapi.load('client:auth2', initClient);
-
-authBtn.addEventListener('click', handleAuth);
-userAvatar.addEventListener('click', handleSignOut)
