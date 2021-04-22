@@ -73,7 +73,7 @@ const handleSignOut = () => {
 
 const updateStatusAuth =  (data) => {
     data.isSignedIn.listen(() => {
-        updateStatusAuth();
+        updateStatusAuth(data);
     })
     if (data.isSignedIn.get()) {
         const userData = data.currentUser.get().getBasicProfile();
