@@ -88,8 +88,8 @@ function initClient() {
     gapi.client.init({
         'apiKey': API_KEY,
         'clientId': CLIENT_ID,
-        'scope': 'https://www.googleapis.com/auth/drive.metadata.readonly',
-        'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
+        'scope': 'https://www.googleapis.com/auth/yotube.readonly',
+        'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest']
     }).then(() => {
         updateStatusAuth(gapi.auth2.getAuthInstance())
         authBtn.addEventListener('click', handleAuth);
