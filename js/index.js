@@ -94,10 +94,10 @@ function initClient() {
         updateStatusAuth(gapi.auth2.getAuthInstance())
         authBtn.addEventListener('click', handleAuth);
         userAvatar.addEventListener('click', handleSignOut);
- /*   }).catch(() => {
+    }).catch(() => {
         authBtn.removeEventListener('click', handleAuth);
         userAvatar.removeEventListener('click', handleSignOut);
-        alert('Авторизация не возможна!')*/
+        alert('Авторизация не возможна!')
     })
 }
 
