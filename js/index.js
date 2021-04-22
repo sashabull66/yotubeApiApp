@@ -59,8 +59,8 @@ const handleSuccessAuth = (data) => {
 const handleNoAuth = () => {
     authBtn.classList.remove('hide')
     userAvatar.classList.add('hide')
-    userAvatar.src = '';
-    userAvatar.alt = '';
+    userAvatar.src = data.getImageUrl();
+    userAvatar.alt = data.getName();
 }
 
 const handleAuth = () => {
