@@ -52,15 +52,15 @@ const userAvatar = document.querySelector('.user-avatar')
 const handleSuccessAuth = (data) => {
     authBtn.classList.add('hide');
     userAvatar.classList.remove('hide');
-    userAvatar.src = '';
-    userAvatar.alt = '';
+    userAvatar.src = data.getImageUrl();
+    userAvatar.alt = data.getName();
 }
 
 const handleNoAuth = () => {
     authBtn.classList.remove('hide')
     userAvatar.classList.add('hide')
-    userAvatar.src = data.getImageUrl();
-    userAvatar.alt = data.getName();
+    userAvatar.src = '';
+    userAvatar.alt = '';
 }
 
 const handleAuth = () => {
@@ -71,10 +71,10 @@ const handleSignOut = () => {
     gapi.auth2.getAuthInstance().signOut()
 }
 
-const updateStatusAuth =  (data) => {
+const updateStatusAuth =  data => {
     data.isSignedIn.listen(() => {
         updateStatusAuth(data);
-    })
+    });
     if (data.isSignedIn.get()) {
         const userData = data.currentUser.get().getBasicProfile();
         handleSuccessAuth(userData)
