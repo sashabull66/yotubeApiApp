@@ -49,12 +49,39 @@ createList(musicList, music)
 const authBtn = document.querySelector('.auth-btn')
 const userAvatar = document.querySelector('.user-avatar')
 
+const handleSuccessAuth = (data) => {
+    authBtn.classList.add('hide');
+    userAvatar.classList.remove('hide');
+    userAvatar.src = '';
+    userAvatar.alt = '';
+}
+
+const handleNoAuth = () => {
+    authBtn.classList.remove('hide')
+    userAvatar.classList.add('hide')
+    userAvatar.src = '';
+    userAvatar.alt = '';
+}
+
 const handleAuth = () => {
-    console.log(gapi.auth2);
+    gapi.auth2.getAuthInstance().signIn()
 }
 
 const handleSignOut = () => {
+    gapi.auth2.getAuthInstance().signOut()
+}
 
+const updateStatusAuth =  (data) => {
+    data.isSignedIn.listen(() => {
+        updateStatusAuth();
+    })
+    if (data.isSignedIn.get()) {
+        const userData = data.currentUser.get().getBasicProfile();
+        handleSuccessAuth(userData)
+    }
+    else {
+        handleNoAuth()
+    }
 }
 
 function initClient() {
@@ -64,9 +91,13 @@ function initClient() {
         'scope': 'https://www.googleapis.com/auth/drive.metadata.readonly',
         'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
     }).then(() => {
+        updateStatusAuth(gapi.auth2.getAuthInstance())
         authBtn.addEventListener('click', handleAuth);
         userAvatar.addEventListener('click', handleSignOut)
     });
 }
 
-gapi.load('client:auth2', initClient)
+gapi.load('client:auth2', initClient);
+
+authBtn.addEventListener('click', handleAuth);
+userAvatar.addEventListener('click', handleSignOut)
