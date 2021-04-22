@@ -54,6 +54,8 @@ const handleSuccessAuth = (data) => {
     userAvatar.classList.remove('hide');
     userAvatar.src = data.getImageUrl();
     userAvatar.alt = data.getName();
+
+    getChanel()
 }
 
 const handleNoAuth = () => {
@@ -102,3 +104,12 @@ function initClient() {
 }
 
 gapi.load('client:auth2', initClient);
+
+const getChanel =  () => {
+    gapi.client.youtube.channels.list({
+        part: 'snippet, contentDetails, statistics',
+        id: 'UCVswRUcKC-M35RzgPRv8qUg'
+    }).execute((response) => {
+        console.log(response);
+    })
+}
