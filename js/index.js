@@ -6,8 +6,9 @@ const musicList = document.querySelector('.music-list');
 const navMenuMore = document.querySelector('.nav-menu-more');
 const showMore = document.querySelector('.show-more');
 
-showMore.addEventListener('click', () => {
-
+showMore.addEventListener('click', (event) => {
+    event.preventDefault(); // блокирую переход по ссылке (отмена браузерного поведения)
+navMenuMore.classList.add('nav-menu-more')
 })
 
 const createCard = (dataVideo) => {

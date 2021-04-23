@@ -153,7 +153,6 @@ function init() {
         }
     }
 
-
     const openYoutubeModal = e => {
 
             const target = e.target.closest('.youtube-modal');
