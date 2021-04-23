@@ -3,6 +3,12 @@ const CLIENT_ID = '144449249725-r7ro322nk1o2i0tsjuihpm1dbq8bmmu8.apps.googleuser
 const gloAcademyList = document.querySelector('.glo-academy-list');
 const trendingList = document.querySelector('.trending-list');
 const musicList = document.querySelector('.music-list');
+const navMenuMore = document.querySelector('.nav-menu-more');
+const showMore = document.querySelector('.show-more');
+
+showMore.addEventListener('click', () => {
+
+})
 
 const createCard = (dataVideo) => {
     const imgUrl = dataVideo.snippet.thumbnails.high.url;
